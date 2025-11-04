@@ -1,13 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NewsFeed from "./pages/NewsFeed";
-
+// Replace your current App.jsx with this:
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<NewsFeed />} />
-      </Routes>
-    </Router>
+    <div>
+      <h1>Facebook Clone</h1>
+      <p>Your Facebook UI is working!</p>
+    </div>
   );
 }
 
