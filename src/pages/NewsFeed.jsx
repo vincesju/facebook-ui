@@ -29,13 +29,12 @@ const NewsFeed = () => {
       setAuthor("");
       setContent("");
       setImageUrl("");
-      fetchPosts(); // Refresh posts
+      fetchPosts();
     } catch (error) {
       console.error("Error creating post:", error);
     }
   };
 
-  // Load posts on start
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -47,7 +46,6 @@ const NewsFeed = () => {
       </header>
 
       <div className="container">
-        {/* Create Post */}
         <div className="create-post">
           <h2>Create Post</h2>
           <form onSubmit={createPost}>
@@ -74,7 +72,6 @@ const NewsFeed = () => {
           </form>
         </div>
 
-        {/* Posts Feed */}
         <div className="posts">
           <h2>News Feed</h2>
           {posts.length === 0 ? (
