@@ -1,0 +1,28 @@
+/* Reset some default browser styles */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure the root container spans the full height */
+  width: 100%; /* Ensure the root container spans the full width */
+  font-family: 'Roboto', sans-serif; /* Use Material-UI's default font */
+  background-color: #f5f5f5; /* Light background color */
+  box-sizing: border-box;
+}
+
+/* Ensure consistent box-sizing */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* Add smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Align the app content to the top */
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
+  align-items: center;
+}
