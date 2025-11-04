@@ -9,7 +9,6 @@ const NewsFeed = () => {
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  // Fetch posts
   const fetchPosts = async () => {
     try {
       const response = await axios.get(API_URL);
@@ -19,7 +18,6 @@ const NewsFeed = () => {
     }
   };
 
-  // Create post
   const createPost = async (e) => {
     e.preventDefault();
     if (!author || !content) return;
@@ -46,6 +44,7 @@ const NewsFeed = () => {
       </header>
 
       <div className="container">
+        {/* Create Post */}
         <div className="create-post">
           <h2>Create Post</h2>
           <form onSubmit={createPost}>
@@ -72,10 +71,13 @@ const NewsFeed = () => {
           </form>
         </div>
 
+        {/* Posts Feed */}
         <div className="posts">
           <h2>News Feed</h2>
           {posts.length === 0 ? (
-            <p>No posts yet</p>
+            <div className="no-posts">
+              <p>No posts yet. Be the first to share something!</p>
+            </div>
           ) : (
             posts.map((post) => (
               <div key={post.id} className="post">
