@@ -42,10 +42,14 @@ const NewsFeed = () => {
     }
 
     try {
-      await axios.delete(`${API_URL}/${postId}`);
+      console.log("Deleting post with ID:", postId);
+      const response = await axios.delete(`${API_URL}/${postId}`);
+      console.log("Delete response:", response);
       fetchPosts(); // Refresh the posts list
     } catch (error) {
       console.error("Error deleting post:", error);
+      console.error("Error details:", error.response?.data);
+      alert("Failed to delete post. Please try again.");
     }
   };
 
@@ -106,7 +110,7 @@ const NewsFeed = () => {
                       {new Date(post.createdDate).toLocaleDateString()}
                     </span>
                   </div>
-                  <button 
+                  <button
                     className="delete-btn"
                     onClick={() => deletePost(post.id)}
                     title="Delete post"
