@@ -8,6 +8,7 @@ const NewsFeed = () => {
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchPosts = async () => {
     try {
@@ -22,6 +23,7 @@ const NewsFeed = () => {
     e.preventDefault();
     if (!author || !content) return;
 
+    setLoading(true);
     try {
       await axios.post(API_URL, { author, content, imageUrl });
       setAuthor("");
@@ -30,6 +32,20 @@ const NewsFeed = () => {
       fetchPosts();
     } catch (error) {
       console.error("Error creating post:", error);
+    }
+    setLoading(false);
+  };
+
+  const deletePost = async (postId) => {
+    if (!window.confirm("Are you sure you want to delete this post?")) {
+      return;
+    }
+
+    try {
+      await axios.delete(`${API_URL}/${postId}`);
+      fetchPosts(); // Refresh the posts list
+    } catch (error) {
+      console.error("Error deleting post:", error);
     }
   };
 
@@ -67,13 +83,15 @@ const NewsFeed = () => {
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
             />
-            <button type="submit">Post</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Posting..." : "Post"}
+            </button>
           </form>
         </div>
 
         {/* Posts Feed */}
         <div className="posts">
-          <h2>News Feed</h2>
+          <h2>News Feed ({posts.length} posts)</h2>
           {posts.length === 0 ? (
             <div className="no-posts">
               <p>No posts yet. Be the first to share something!</p>
@@ -82,8 +100,19 @@ const NewsFeed = () => {
             posts.map((post) => (
               <div key={post.id} className="post">
                 <div className="post-header">
-                  <strong>{post.author}</strong>
-                  <span>{new Date(post.createdDate).toLocaleDateString()}</span>
+                  <div>
+                    <strong>{post.author}</strong>
+                    <span className="post-time">
+                      {new Date(post.createdDate).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <button 
+                    className="delete-btn"
+                    onClick={() => deletePost(post.id)}
+                    title="Delete post"
+                  >
+                    ×
+                  </button>
                 </div>
                 <p>{post.content}</p>
                 {post.imageUrl && (
